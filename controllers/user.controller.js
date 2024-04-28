@@ -1,8 +1,8 @@
-const userModel = require("../../models/user.model");
+const { findAllUsers, findUserByUsername, addUser } = require("../services/user.service");
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await userModel.find();
+        const users = await findAllUsers();
         if (!users) {
             return res.status(404).json({message: "No users found."});
         }
@@ -17,7 +17,7 @@ const getAllUsers = async (req, res) => {
 const getUserByUsername = async (req, res) => {
     try {
         const { username } = req.params;
-        const user = await userModel.findOne({userName: username});
+        const user = await findUserByUsername(username);
         if (user) {
             return res.status(200).json(user);
         }
@@ -33,7 +33,7 @@ const getUserByUsername = async (req, res) => {
 
 const createUser = async (req, res) => {
     try {
-        const newUserDoc = await userModel.create(req.body);
+        const newUserDoc = await addUser(req.body);
 
         return res.status(201).json(newUserDoc);
     }
