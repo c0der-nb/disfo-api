@@ -1,8 +1,10 @@
-const { findAllUsers, findUserByUsername, addUser } = require("../services/user.service");
+const UserService = require("../services/user.service");
+
+const userServiceInstance = new UserService();
 
 const getAllUsers = async (req, res) => {
     try {
-        const users = await findAllUsers();
+        const users = await userServiceInstance.findAllUsers();
         if (!users) {
             return res.status(404).json({message: "No users found."});
         }
@@ -17,7 +19,7 @@ const getAllUsers = async (req, res) => {
 const getUserByUsername = async (req, res) => {
     try {
         const { username } = req.params;
-        const user = await findUserByUsername(username);
+        const user = await userServiceInstance.findUserByUsername(username);
         if (user) {
             return res.status(200).json(user);
         }
@@ -33,7 +35,7 @@ const getUserByUsername = async (req, res) => {
 
 const createUser = async (req, res) => {
     try {
-        const newUserDoc = await addUser(req.body);
+        const newUserDoc = await userServiceInstance.addUser(req.body);
 
         return res.status(201).json(newUserDoc);
     }
