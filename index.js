@@ -16,4 +16,4 @@ mongoose.connect(DB_URI)
                 console.log(`Server listening at PORT ${PORT}`);
             });
         })
-        .catch((err) => console.log("Failed to connect to DB", err));
+        .catch((err) => console.log("Failed to connect to DB ->", err));
